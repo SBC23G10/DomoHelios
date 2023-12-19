@@ -54,8 +54,8 @@ Además de librerias de implementación abstractas de uso específico (desarroll
 
 Pruebas del funcionamiento "medianamente fluido" [en modo tiempo real] de la estimulación por luz ldr en forma de rotación de los servomotores, limitaciones por ser los ejes no los ideales (falta de lubricación, etc). Se podría imprimir en 3D un soporte o soportes eje base y horquilla de sujeción (Posibles futuras versiones)
 
-
-
-<img src="https://raw.githubusercontent.com/SBC23G10/DomoHelios/main/showoff/solar_kinect.gif" height="450">
+<p align="center">
+  <img height=600 src="https://raw.githubusercontent.com/SBC23G10/DomoHelios/main/showoff/solar_kinect.gif" alt="animated" />
+</p>
 
 Pruebas de control de carga y monitorización de su voltaje.
