@@ -44,6 +44,8 @@ Entre otros, principalmente:
 
     asi como la libreria de rápida serializacion basada en operador[] de C++ de [bblanchon](https://github.com/bblanchon) que puedes encontrar en [ArduinoJSON](https://github.com/bblanchon/ArduinoJson)
 
+- En cuanto al stack de bluetooth se ha utilizado la libreria de transmision de ficheros mediante Bluetooth OBject EXange (OBEX) de [PranjalKushwaha](https://github.com/PranjalKushwaha) que puedes encontrar en [ESP32-Bluetooth-FTP](https://github.com/PranjalKushwaha/ESP32-Bluetooth-FTP)
+
 - Se ha desarrollado una libreria de propósito general de fácil control de SERVOMOTORES en C++ de precision en coma flotante (precisión simple) basándose en la multiplicidad de terminos decimales y POSTERIOR redondeo del valor de carga util (duty cycle) (para el control del panel en 360.00 grados completos) que puedes encontrar en [esp-servo-util](https://github.com/SBC23G10/esp_servo_util).
 
     Puede ser facilmente portado para cualquier sistema de multiples servomotores sobre abstracciones que funcionen a través de etherCAT.
