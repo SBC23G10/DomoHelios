@@ -1,35 +1,57 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C6 | ESP32-H2 | ESP32-P4 | ESP32-S2 | ESP32-S3 |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+# _SBC23G10 "DomoHelios"_
 
-# _Sample project_
+Proyecto propuesto en la asignatura Sistemas Basados en Computador de la ETSI de Sistemas Informaticos de la UPM del año 2023 (grupo 10).
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+## DomoHelios ¿Qué es?
 
-This is the simplest buildable example. The example is used by command `idf.py create-project`
-that copies the project to user specified path and set it's name. For more information follow the [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project)
+Se trata de un intento de sistema de gestión del hogar (domótica) y carga energética retroalimentado a partir de energía solar.
 
+## Implementaciones clave
 
+El proyecto consta de los siguientes elementos clave:
+- Control de orientación del panel en tiempo real (esta limitado a plazos para ahorro energético).
+- Carga simultánea de bateria y control de su consumo
+- Proporcionar la funcionalidad básica domótica, control de actuadores
+- Persistencia y consulta de datos bajo demanda
 
-## How to use example
-We encourage the users to use the example as a template for the new projects.
-A recommended way is to follow the instructions on a [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project).
+Su funcionamiento puede ser facilmente extendido a un control de N paneles solares a escala industrial (etherCAT).
 
-## Example folder contents
+## Hardware empleado
 
-The project **sample_project** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
+### Elementos generales
 
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
-files that provide set of directives and instructions describing the project's source files and targets
-(executable, library, or both). 
+Se hace uso del microcontrolador ESP-32 de Espressif Systems, placa NodeMCU.
 
-Below is short explanation of remaining files in the project folder.
+### Elementos específicos
 
-```
-├── CMakeLists.txt
-├── main
-│   ├── CMakeLists.txt
-│   └── main.c
-└── README.md                  This is the file you are currently reading
-```
-Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
-They are not used or needed when building with CMake and idf.py.
+Entre otros, principalmente:
+- 1x Panel solar de 180 x 140 mm
+- Nx Bateria
+- 1x Controlador bateria(s) (el modelo depende de la composición de estas)
+- 2x Servomotor MG996R (inicialmente SG90 reemplazado por falta de torque)
+- 1x Caja de empalme redonda (base rotor)
+- 1x Plancha de PVC (recortes soporte panel, base y casa)
+- 1x Bomba de agua 3v 4546 adafruit (Actuador "Bomba")
+- 1x Led naranja (Actuador "Iluminación")
+- 2x Transistor Darlington "tip120" (Apertura a tierra)
+- 4x escuadras metalicas (horquilla de sujeción)
+
+## ¿Qué librerias utiliza?
+
+- Hace uso del SDK de control encapsulado MQTT & RPC del repositorio de ThingsBoard que puedes encontrar en [thingsboard-client-sdk](https://github.com/thingsboard/thingsboard-client-sdk).
+
+- Para el tratamiento/generacion de ficheros JSON se hace uso de la libreria cJSON de [DaveGamble](https://github.com/DaveGamble) que puedes encontrar en [cJSON](https://github.com/DaveGamble/cJSON),
+
+    asi como la libreria de rápida serializacion basada en operador[] de C++ de [bblanchon](https://github.com/bblanchon) que puedes encontrar en [ArduinoJSON](https://github.com/bblanchon/ArduinoJson)
+
+- Se ha desarrollado una libreria de propósito general de fácil control de SERVOMOTORES en C++ de precision en coma flotante (precisión simple) basándose en la multiplicidad de terminos decimales y POSTERIOR redondeo del valor de carga util (duty cycle) (para el control del panel en 360.00 grados completos) que puedes encontrar en [esp-servo-util](https://github.com/SBC23G10/esp_servo_util).
+
+    Puede ser facilmente portado para cualquier sistema de multiples servomotores sobre abstracciones que funcionen a través de etherCAT.
+
+Además de librerias de implementación abstractas de uso específico (desarrolladas específicamente para el proyecto).
+
+## Galería de testeo y elaboración del proyecto
+
+Pruebas del funcionamiento "medianamente fluido" [en modo tiempo real] de la estimulación por luz ldr en forma de rotación de los servomotores, limitaciones por ser los ejes no los ideales (falta de lubricación, etc). Se podría imprimir en 3D un soporte o soportes eje base y horquilla de sujeción (Posibles futuras versiones)
+
+Pruebas de control de carga y monitorización de su voltaje.
